@@ -61,7 +61,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:progressBackgroundTint="@color/cardview_dark_background"
                     android:max="100"
                     android:min="0"/>
 
