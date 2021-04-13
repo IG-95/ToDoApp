@@ -12,6 +12,8 @@ import com.example.todoapp.todolists.data.ToDoList
 import com.example.todoapp.todolists.data.Task
 import com.example.todoapp.databinding.ActivityTodolistDetailsBinding
 import com.example.todoapp.databinding.TaskLayoutBinding
+import com.example.todoapp.ref
+import com.example.todoapp.todolistCollection
 
 lateinit var displayTaskList: MutableList<Task>
 
@@ -33,27 +35,6 @@ class TaskDetailsActivity : AppCompatActivity() {
 
 
         updateDisplay()
-
-        // Metode med Intent
-        //val receivedBook = intent.getParcelableExtra<Book>(EXTRA_BOOK_INFO)
-
-        // Metode uten Intent
-        //val receivedTask = TaskHolder.pickedToDoList
-
-        /*if (receivedTask != null) {
-            binding.titlepage.text = receivedTask.title
-            binding.subtitlepage.text = receivedTask.description
-        }*/
-
-        /*if (receivedTask != null) {
-            task = receivedTask
-            Log.i("Details view", receivedTask.toString())
-        } else {
-            setResult(RESULT_CANCELED, Intent(EXTRA_TODOLIST_INFO).apply {
-                // Legg til info vi vil sende tilbake til Main
-            })
-            finish() // stenger aktiviteten
-        }*/
     }
 
     fun updateDisplay() {
@@ -87,6 +68,7 @@ class TaskDetailsActivity : AppCompatActivity() {
             }
         }
         progress_update(task.id)
+        ref.setValue(todolistCollection)
         updateDisplay()
     }
 
@@ -98,13 +80,13 @@ class TaskDetailsActivity : AppCompatActivity() {
 
     // Checkbox & Progressbar
     private fun checkboxChecked(task: Task): Unit {
-        //val checkBinding: TaskLayoutBinding
-        //checkBinding = TaskLayoutBinding.inflate(LayoutInflater.from(this))
         todolistCollection.forEach {
             if (it.id == TaskHolder.pickedToDoList?.id) {
                 task.check = !task.check
             }
             progress_update(task.id)
+
+            ref.setValue(todolistCollection)
             updateDisplay()
         }
 

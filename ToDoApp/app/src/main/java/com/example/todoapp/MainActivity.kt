@@ -9,17 +9,21 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.databinding.ActivityMainBinding
 import com.example.todoapp.todolists.*
+import com.example.todoapp.todolists.data.Task
 import com.example.todoapp.todolists.data.ToDoList
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 
 
 const val EXTRA_TODOLIST_INFO: String = "com.example.todoapp.task.info"
 const val REQUEST_TODOLIST_DETAILS: Int = 719
 
-//Firebase
-//val ref = FirebaseDatabase.getInstance().getReference("Lists")
+var todolistCollection = mutableListOf<ToDoList>()
+
 
 // Metode uten intents
 class TaskHolder{
@@ -29,6 +33,7 @@ class TaskHolder{
 }
 
 val auth = Firebase.auth
+val ref = FirebaseDatabase.getInstance().getReference("Users")
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,66 +43,30 @@ class MainActivity : AppCompatActivity() {
     var onSave:((file:Uri) -> Unit)? = null
     private val TAG:String = "todoapp.MainActivity"
 
-    // Firebase indian
-    //var firebaseAuth: FirebaseAuth? = null
-    //var firebaseDatabase: FirebaseDatabase? = null
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Firebase crismo
-        //auth = Firebase.auth
+        // Firebase
         signInAnonymously()
+        //download()
 
-        // Firebase indian
-        /*firebaseAuth = FirebaseAuth.getInstance()
-        val databaseReference = FirebaseDatabase.getInstance().getReference(firebaseAuth!!.uid!!)
-        databaseReference.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                Toast.makeText(this@MainActivity, snapshot.key, Toast.LENGTH_SHORT).show()
-            }
+        //binding.todolistListing.layoutManager = LinearLayoutManager(this)
+        //binding.todolistListing.adapter = ToDoListCollectionAdapter(emptyList<ToDoList>(), this::onToDoListClicked, this::onToDoListRemoved)
+        updateDisplay()
 
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })*/
-
-        binding.todolistListing.layoutManager = LinearLayoutManager(this)
-        binding.todolistListing.adapter = ToDoListCollectionAdapter(emptyList<ToDoList>(), this::onToDoListClicked, this::onToDoListRemoved)
-
-        ToDoListDepositoryManager.instance.onToDoLists = {
+        /*ToDoListDepositoryManager.instance.onToDoLists = {
             (binding.todolistListing.adapter as ToDoListCollectionAdapter).updateCollection(it)
         }
 
-        ToDoListDepositoryManager.instance.load()
+        ToDoListDepositoryManager.instance.load()*/
 
         binding.addToDoListBtn.setOnClickListener {
             val intent = Intent(this, AddToDoList::class.java)
             startActivity(intent)
         }
     }
-
-
-    /*private fun addToDoList(id: Int= getId(), list: MutableList<Task>, title: String, description: String, published: Int) {
-        val list = ToDoList(id, list, title, description, published)
-        TaskDepositoryManager.instance.addToDoList(list)
-    }*/
-
-    // Firebase
-    /*private fun upload(file: Uri){
-        Log.d(TAG, "Upload file $file")
-
-        val ref = FirebaseStorage.getInstance().reference.child("todolist/${file.lastPathSegment}")
-        var uploadTask = ref.putFile(file)
-
-        uploadTask.addOnSuccessListener {
-            Log.d(TAG, "Saved file ${it.toString()}")
-        }.addOnFailureListener {
-            Log.e(TAG, "Error saving file", it)
-        }
-    }*/
 
     private fun signInAnonymously(){
         auth.signInAnonymously().addOnSuccessListener {
@@ -121,27 +90,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onToDoListClicked(todolist: ToDoList):Unit{
-        // Detalje side for bok
-
-        // Metode med intents
-
-        /*val intent = Intent(this, BookDetailsActivity::class.java).apply {
-            putExtra(EXTRA_BOOK_INFO, book)
-            }*/
 
         // Metode uten intents
-
         TaskHolder.pickedToDoList = todolist
         val intent = Intent(this, TaskDetailsActivity::class.java)
 
         startActivity(intent)
-
-        // Hvordan motta ting tilbake gjennom intents
-        //startActivityForResult(intent, 719)
     }
 
     private fun onToDoListRemoved(todolist: ToDoList){
         todolistCollection.remove(todolist)
+
+        ref.setValue(todolistCollection)
+
         updateDisplay()
     }
 
@@ -150,9 +111,43 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_TODOLIST_DETAILS){
-
         }
     }
+
+    // Downloading data from Firebase
+    private fun download() {
+        val get = object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                todolistCollection.clear()
+                p0.children.forEach {
+                    val id = it.child("id").value.toString().toInt()
+                    val tit = it.child("title").value.toString()
+                    val desc = it.child("description").value.toString()
+                    val prog = it.child("progress").value.toString().toInt()
+                    val list = it.child("list")
+                    val tasklist = mutableListOf<Task>()
+                    if (list.children.count() != 0) {
+                        list.children.forEach { d ->
+                            val sub_check = d.child("sub_check").value.toString().toBoolean()
+                            val sub_tit = d.child("sub_title").value.toString()
+                            val sub_id = d.child("inn_id").value.toString().toInt()
+                            val task = Task(sub_check, sub_tit, sub_id)
+                            tasklist.add(task)
+                        }
+                    }
+                    val newtodolist = ToDoList(id, tasklist, tit, desc, prog)
+                    todolistCollection.add(newtodolist)
+                }
+                updateDisplay()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        }
+        ref.child(auth.uid.toString()).addValueEventListener(get)
+        ref.child(auth.uid.toString()).addListenerForSingleValueEvent(get)
+    }
+
 }
 
 var id: Int = 0
@@ -162,3 +157,5 @@ fun getId(): Int {
     id ++
     return(id)
 }
+
+

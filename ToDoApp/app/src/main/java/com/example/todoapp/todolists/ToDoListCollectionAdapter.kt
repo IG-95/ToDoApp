@@ -4,13 +4,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.todolists.data.ToDoList
 import com.example.todoapp.databinding.TodolistLayoutBinding
 
-class ToDoListCollectionAdapter(private var todolist:List<ToDoList>, private val onToDoListClicked:(ToDoList) -> Unit, private val onToDoListClickRemoved:(ToDoList) -> Unit) : RecyclerView.Adapter<ToDoListCollectionAdapter.ViewHolder>(){
+class ToDoListCollectionAdapter(private var todolist:MutableList<ToDoList>, private val onToDoListClicked:(ToDoList) -> Unit, private val onToDoListClickRemoved:(ToDoList) -> Unit) : RecyclerView.Adapter<ToDoListCollectionAdapter.ViewHolder>(){
 
     class ViewHolder(val binding: TodolistLayoutBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(todolist: ToDoList, onToDoListClicked:(ToDoList) -> Unit, onToDoListClickRemoved:(ToDoList) -> Unit) {
             binding.title.text  = todolist.title
             binding.description.text = todolist.description
-            binding.priority.text  = todolist.priority.toString()
             binding.progressBar.progress = todolist.progress
             binding.card.setOnClickListener{
                 onToDoListClicked(todolist)
@@ -32,8 +31,8 @@ class ToDoListCollectionAdapter(private var todolist:List<ToDoList>, private val
         return ViewHolder(TodolistLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    public fun  updateCollection(newTasks:List<ToDoList>){
+    /*public fun  updateCollection(newTasks:MutableList<ToDoList>){
         todolist = newTasks
         notifyDataSetChanged()
-    }
+    }*/
 }

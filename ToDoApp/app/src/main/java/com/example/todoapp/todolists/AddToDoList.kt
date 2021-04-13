@@ -2,9 +2,12 @@ package com.example.todoapp.todolists
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.todoapp.auth
 import com.example.todoapp.databinding.AddtaskLayoutBinding
 import com.example.todoapp.databinding.AddtodolistLayoutBinding
 import com.example.todoapp.getId
+import com.example.todoapp.ref
+import com.example.todoapp.todolistCollection
 import com.example.todoapp.todolists.data.Task
 import com.example.todoapp.todolists.data.ToDoList
 import kotlinx.android.synthetic.main.addtask_layout.*
@@ -21,16 +24,18 @@ class AddToDoList : AppCompatActivity(){
         binding.addToDoListButton.setOnClickListener {
             val title = binding.title.text.toString()
             val description = binding.description.text.toString()
-            val priority = binding.priority.text.toString().toInt()
             var list = mutableListOf<Task>()
 
-            val newTodoList = ToDoList(getId(), list, title, description, priority)
+            val newTodoList = ToDoList(getId(), list, title, description)
 
             todolistCollection.add(newTodoList)
             println("777777777${todolistCollection}")
-            finish()
 
-            //addToDoList(list = list, title = title, description = description, published =  priority)
+            //ref.setValue("95")
+            //ref.setValue(todolistCollection)
+            ref.child(auth.uid.toString()).setValue(todolistCollection)
+
+            finish()
         }
     }
 }

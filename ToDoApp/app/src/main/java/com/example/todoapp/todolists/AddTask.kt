@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.todoapp.TaskHolder
 import com.example.todoapp.todolists.data.Task
 import com.example.todoapp.databinding.AddtaskLayoutBinding
+import com.example.todoapp.ref
+import com.example.todoapp.todolistCollection
 
 class AddTask : AppCompatActivity()  {
 
@@ -28,6 +30,9 @@ class AddTask : AppCompatActivity()  {
 
                     println("111111111${it.list}")
                     progress_update(it.id)
+
+                    ref.setValue(todolistCollection)
+
                     finish()
                 }
             }
