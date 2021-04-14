@@ -85,63 +85,6 @@
 
         </ScrollView>
 
-        <!--Subtasks-->
-
-
-        <!--<LinearLayout
-            android:id="@+id/manualLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/subLinearLayout"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints">
-
-
-
-            &lt;!&ndash;<TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="19dp"
-                android:layout_marginLeft="5dp"
-                android:text="Task Name"
-                android:textAlignment="center"
-                android:textColor="#000C5D"
-                android:textSize="22sp"
-                tools:ignore="RtlCompat" />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="8dp"
-                android:text="Description Perhaps"
-                android:textColor="#ADADAD"
-                android:textSize="18sp" />&ndash;&gt;
-
-        </LinearLayout>
-
-        &lt;!&ndash;<LinearLayout
-            app:layout_constraintEnd_toEndOf="@+id/manualLinearLayout"
-            app:layout_constraintBottom_toBottomOf="@+id/manualLinearLayout"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/published"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Priority"
-                android:layout_marginTop="8dp"
-                android:textColor="#2F383C"
-                android:textSize="18sp"/>
-        </LinearLayout>&ndash;&gt;
-    -->
-
 
     </LinearLayout>
 
