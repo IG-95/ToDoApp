@@ -51,19 +51,7 @@
                         android:textSize="18sp" />
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnAddNew"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginTop="35dp"
-                    android:background="@drawable/abc_vector_test"
-                    android:gravity="center_horizontal"
-                    android:textAlignment="center"
-                    android:textColor="#FFF"
-                    android:textSize="38sp" />
-
+                
             </LinearLayout>
 
             <androidx.constraintlayout.widget.Barrier
