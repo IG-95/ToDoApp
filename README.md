@@ -7,4 +7,4 @@ Appen utfyller alle nødvendige funksjonaliteter oppgitt i oppgaveteksten og gen
 Det har også blitt gjort arbeid på utseende, brukervennlighet og liknende for å skape en bedre brukeropplevelse.
 
 Nedenfor har jeg inkludert en link til nedlasting av APK filen til appen via Firebase App distribution:
-https://appdistribution.firebase.dev/i/583a14fd5917d603
+https://appdistribution.firebase.dev/i/34b1c00b76ec9be4
