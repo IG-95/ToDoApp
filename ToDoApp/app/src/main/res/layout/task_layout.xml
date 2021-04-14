@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
+    android:layout_margin="3dp"
     android:background="@drawable/gradient_background"
-    android:layout_margin="3dp">
+    android:clickable="true"
+    android:focusable="true">
 
 
     <RelativeLayout
@@ -15,47 +14,47 @@
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background">
 
-            <LinearLayout
-                android:id="@+id/Tasks"
+        <LinearLayout
+            android:id="@+id/Tasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="20dp">
+                android:paddingLeft="10dp"
+                android:shadowColor="@color/white" />
 
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:shadowColor="@color/white"/>
-
-                <TextView
-                    android:id="@+id/subTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="text"
-                    android:textColor="@color/white"
-                    android:textSize="25sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/subTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:orientation="horizontal"
-                android:layout_alignParentRight="true"
-                android:layout_margin="20dp">
+                android:text="text"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:orientation="horizontal">
 
 
-                <ImageButton
-                    android:id="@+id/taskDeleteButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/cardview_dark_background"
-                    app:srcCompat="@android:drawable/ic_menu_delete" />
-            </LinearLayout>
+            <ImageButton
+                android:id="@+id/taskDeleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cardview_dark_background"
+                app:srcCompat="@android:drawable/ic_menu_delete" />
+        </LinearLayout>
 
 
     </RelativeLayout>

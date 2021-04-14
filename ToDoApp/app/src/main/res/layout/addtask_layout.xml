@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background">
@@ -15,20 +14,20 @@
             android:id="@+id/addTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Task"
-            android:textSize="25dp"
-            android:textColor="@color/black"
-            android:textAlignment="center"
             android:layout_margin="30dp"
             android:background="@color/white"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            android:hint="Enter Task"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/addTaskButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add"
-            android:background="@color/white"/>
+            android:background="@color/white"
+            android:text="Add" />
 
     </LinearLayout>
 

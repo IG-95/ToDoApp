@@ -7,11 +7,11 @@ import com.example.todoapp.todolists.data.Task
 import com.example.todoapp.databinding.TaskLayoutBinding
 import com.example.todoapp.todolists.data.ToDoList
 
-class TaskAdapter (private var tasks:List<Task>, private var checkboxChecked: (Task)-> Unit, private val onTaskClickRemoved:(Task) -> Unit): RecyclerView.Adapter<TaskAdapter.ViewHolder>(){
+class TaskAdapter(private var tasks: List<Task>, private var checkboxChecked: (Task) -> Unit, private val onTaskClickRemoved: (Task) -> Unit) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
 
-    class ViewHolder(private val binding: TaskLayoutBinding):RecyclerView.ViewHolder(binding.root) {
-        fun bind(task: Task, checkboxChecked: (Task)-> Unit , onTaskClickRemoved:(Task) -> Unit) {
+    class ViewHolder(private val binding: TaskLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(task: Task, checkboxChecked: (Task) -> Unit, onTaskClickRemoved: (Task) -> Unit) {
             binding.checkBox.isChecked = task.check
             binding.subTitle.text = task.title
             binding.taskDeleteButton.setOnClickListener {
@@ -35,8 +35,6 @@ class TaskAdapter (private var tasks:List<Task>, private var checkboxChecked: (T
         return ViewHolder(TaskLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     }
-
-
 
 
 }

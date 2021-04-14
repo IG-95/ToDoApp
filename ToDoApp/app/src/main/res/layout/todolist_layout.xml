@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
+    android:backgroundTint="#2F383C"
     android:clickable="true"
     android:focusable="true"
-    app:contentPadding="24dp"
     app:cardCornerRadius="4dp"
-    android:backgroundTint="#2F383C">
+    app:contentPadding="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,22 +22,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Title"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Description"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:text="Description" />
 
         <TextView
             android:id="@+id/priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Priority"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:text="Priority" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -45,21 +45,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:progressBackgroundTint="@color/cardview_dark_background"/>
+            android:progressBackgroundTint="@color/cardview_dark_background" />
 
 
     </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/ToDoListDeleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/cardview_dark_background"
+    <ImageButton
+        android:id="@+id/ToDoListDeleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/cardview_dark_background"
 
-            app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 
 
 </androidx.cardview.widget.CardView>

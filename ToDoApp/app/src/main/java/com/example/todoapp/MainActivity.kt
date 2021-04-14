@@ -19,29 +19,27 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 
 
-const val EXTRA_TODOLIST_INFO: String = "com.example.todoapp.task.info"
 const val REQUEST_TODOLIST_DETAILS: Int = 719
 
 var todolistCollection = mutableListOf<ToDoList>()
 
-
 // Metode uten intents
-class TaskHolder{
+class TaskHolder {
     companion object {
         var pickedToDoList: ToDoList? = null
     }
 }
 
+// Firebase
 val auth = Firebase.auth
-val ref = FirebaseDatabase.getInstance().getReference("Users")
+val ref = FirebaseDatabase.getInstance("https://todoapp-7809a-default-rtdb.europe-west1.firebasedatabase.app/").getReference("/List")
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    // Firebase crismo
-    var onSave:((file:Uri) -> Unit)? = null
-    private val TAG:String = "todoapp.MainActivity"
+    // Firebase
+    private val TAG: String = "todoapp.MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +48,9 @@ class MainActivity : AppCompatActivity() {
 
         // Firebase
         signInAnonymously()
-        //download()
+        download()
 
-        //binding.todolistListing.layoutManager = LinearLayoutManager(this)
-        //binding.todolistListing.adapter = ToDoListCollectionAdapter(emptyList<ToDoList>(), this::onToDoListClicked, this::onToDoListRemoved)
         updateDisplay()
-
-        /*ToDoListDepositoryManager.instance.onToDoLists = {
-            (binding.todolistListing.adapter as ToDoListCollectionAdapter).updateCollection(it)
-        }
-
-        ToDoListDepositoryManager.instance.load()*/
 
         binding.addToDoListBtn.setOnClickListener {
             val intent = Intent(this, AddToDoList::class.java)
@@ -68,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun signInAnonymously(){
+    private fun signInAnonymously() {
         auth.signInAnonymously().addOnSuccessListener {
             Log.d(TAG, "Login successful ${it.user.toString()}")
         }.addOnFailureListener {
@@ -77,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Updates the new list
-    private fun updateDisplay(){
+    private fun updateDisplay() {
         binding.todolistListing.layoutManager = LinearLayoutManager(this)
         binding.todolistListing.adapter = ToDoListCollectionAdapter(todolistCollection, this::onToDoListClicked, this::onToDoListRemoved)
     }
@@ -89,8 +79,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun onToDoListClicked(todolist: ToDoList):Unit{
-
+    private fun onToDoListClicked(todolist: ToDoList): Unit {
         // Metode uten intents
         TaskHolder.pickedToDoList = todolist
         val intent = Intent(this, TaskDetailsActivity::class.java)
@@ -98,10 +87,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun onToDoListRemoved(todolist: ToDoList){
+    private fun onToDoListRemoved(todolist: ToDoList) {
         todolistCollection.remove(todolist)
 
-        ref.setValue(todolistCollection)
+        ref.child(auth.uid.toString()).setValue(todolistCollection)
 
         updateDisplay()
     }
@@ -110,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_TODOLIST_DETAILS){
+        if (requestCode == REQUEST_TODOLIST_DETAILS) {
         }
     }
 
@@ -128,9 +117,9 @@ class MainActivity : AppCompatActivity() {
                     val tasklist = mutableListOf<Task>()
                     if (list.children.count() != 0) {
                         list.children.forEach { d ->
-                            val sub_check = d.child("sub_check").value.toString().toBoolean()
-                            val sub_tit = d.child("sub_title").value.toString()
-                            val sub_id = d.child("inn_id").value.toString().toInt()
+                            val sub_check = d.child("check").value.toString().toBoolean()
+                            val sub_tit = d.child("title").value.toString()
+                            val sub_id = d.child("id").value.toString().toInt()
                             val task = Task(sub_check, sub_tit, sub_id)
                             tasklist.add(task)
                         }
@@ -154,8 +143,8 @@ var id: Int = 0
 
 @JvmName("getId1")
 fun getId(): Int {
-    id ++
-    return(id)
+    id++
+    return (id)
 }
 
 
