@@ -1,4 +1,5 @@
 # ToDoApp
+ToDo-List App made for smartphones with Android OS in Kotlin.
 IKT205 - Prosjektoppgave 1 
 
 På denne prosjektoppgaven så har jeg laget en huskeliste app.
